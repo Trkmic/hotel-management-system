@@ -10,13 +10,10 @@ public abstract class Servicio {
     protected LocalDate dia;
 
     public Servicio(String codServicio, double porcentajeDescuento, boolean enPromocion, LocalDate dia) {
-        if (codServicio == null || codServicio.length() != 6) {
-            throw new IllegalArgumentException("El codigo debe tener 6 caracteres unicos!");
-        }
-        this.codServicio = codServicio;
-        this.porcentajeDescuento = porcentajeDescuento;
+        setCodServicio(codServicio);
+        setPorcentajeDescuento(porcentajeDescuento);
+        setDia(dia);
         this.enPromocion = enPromocion;
-        this.dia = dia;
     }
 
     public LocalDate getDia() {
@@ -24,6 +21,9 @@ public abstract class Servicio {
     }
 
     public void setDia(LocalDate dia) {
+        if (dia == null) {
+            throw new IllegalArgumentException("El dia no puede ser nulo.");
+        }
         this.dia = dia;
     }
 
@@ -33,7 +33,7 @@ public abstract class Servicio {
 
     public void setCodServicio(String codServicio) {
         if (codServicio == null || codServicio.length() != 6) {
-            throw new IllegalArgumentException("El codigo debe tener 6 caracteres unicos!");
+            throw new CodigoInvalidoException("El codigo debe tener 6 caracteres unicos!");
         }
         this.codServicio = codServicio;
     }
@@ -43,6 +43,9 @@ public abstract class Servicio {
     }
 
     public void setPorcentajeDescuento(double porcentajeDescuento) {
+        if (porcentajeDescuento < 0 || porcentajeDescuento > 100) {
+            throw new IllegalArgumentException("El porcentaje de descuento debe estar entre 0 y 100.");
+        }
         this.porcentajeDescuento = porcentajeDescuento;
     }
 

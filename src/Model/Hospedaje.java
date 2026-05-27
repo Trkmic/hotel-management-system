@@ -11,9 +11,9 @@ public class Hospedaje extends Servicio {
 
     public Hospedaje(String codServicio, double porcentajeDescuento, boolean enPromocion, LocalDate dia, String hospedaje, double precioPorNoche, int diasDeHospedaje) {
         super(codServicio, porcentajeDescuento, enPromocion, dia);
-        this.hospedaje = hospedaje;
-        this.precioPorNoche = precioPorNoche;
-        this.diasDeHospedaje = diasDeHospedaje;
+        setHospedaje(hospedaje);
+        setPrecioPorNoche(precioPorNoche);
+        setDiasDeHospedaje(diasDeHospedaje);
     }
 
     public String getHospedaje() {
@@ -21,6 +21,9 @@ public class Hospedaje extends Servicio {
     }
 
     public void setHospedaje(String hospedaje) {
+        if (hospedaje == null || hospedaje.trim().isEmpty()) {
+            throw new IllegalArgumentException("El nombre del hospedaje no puede estar vacio.");
+        }
         this.hospedaje = hospedaje;
     }
 
@@ -29,7 +32,21 @@ public class Hospedaje extends Servicio {
     }
 
     public void setPrecioPorNoche(double precioPorNoche) {
+        if (precioPorNoche < 0) {
+            throw new IllegalArgumentException("El precio por noche no puede ser negativo.");
+        }
         this.precioPorNoche = precioPorNoche;
+    }
+
+    public int getDiasDeHospedaje() {
+        return diasDeHospedaje;
+    }
+
+    public void setDiasDeHospedaje(int diasDeHospedaje) {
+        if (diasDeHospedaje < 1) {
+            throw new IllegalArgumentException("La cantidad de dias de hospedaje debe ser al menos 1.");
+        }
+        this.diasDeHospedaje = diasDeHospedaje;
     }
 
     @Override
@@ -44,7 +61,6 @@ public class Hospedaje extends Servicio {
             }
         }
         return precioFinal;
-
     }
 
     @Override
